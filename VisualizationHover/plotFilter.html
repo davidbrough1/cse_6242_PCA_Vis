@@ -10,7 +10,7 @@ Fall 2014
 <style>
 
 .axis text {
-    font: 10px sans-serif;
+    font: 14px sans-serif;
 }
 
 .axis path,
@@ -24,8 +24,6 @@ Fall 2014
 	width: 49%;
 	height: 49%;
 	float: left;
-    border-style: solid;
-    border-width: 1px;
 }
 
 .container2 {
@@ -37,6 +35,7 @@ Fall 2014
 .filter {
 	float: left;
 	margin: 50px 20px 20px 0px;
+	font: 20px sans-serif;
 }
 
 .overlay {
@@ -54,6 +53,8 @@ Fall 2014
     stroke: steelblue;
 }
 
+
+
 </style>
 
 <head>
@@ -61,7 +62,7 @@ Fall 2014
 </head>
 
 <body>
-	<h1> <center>MatSciViz</center> </h1>
+	<h1 style="font-family:sans-serif; font-size: 40px"> <center>MatSciViz</center> </h1>
     <!--div for PC chart area-->
     <div class="container" id="pc_chart"></div>
     <!--div for image area-->
@@ -118,7 +119,8 @@ Fall 2014
             .attr("x", (width / 1.5))
             .attr("y", margin.top)
             .attr("text-anchor", "middle")
-            .style("font-size", "16px")
+            .style("font-size", "22px")
+            .style("font-family", "sans-serif")
             .style("text-decoration", "underline")
             .text("Images");
             
@@ -128,7 +130,8 @@ Fall 2014
             .attr("x", (width / 1.5))
             .attr("y", margin.top)
             .attr("text-anchor", "middle")
-            .style("font-size", "16px")
+            .style("font-size", "22px")
+            .style("font-family", "sans-serif")
             .style("text-decoration", "underline")
             .text("PC Graph");
             
@@ -138,27 +141,28 @@ Fall 2014
            .attr("transform", "translate(0," + height + ")")
            .append("text")
            .attr("class", "xAxisLabel")
-           .attr("transform","translate(" + width/2 + ",30)")
+           .attr("transform","translate(" + width/2 + ",40)")
            .attr("text-anchor", "middle")
            .style("font-weight", "bold")
-           .style("font-size", "13px")
+           .style("font-size", "16px")
         
         //set y axis for PC chart
         svg.append("g")
            .attr("class", "y axis")
            .append("text")
            .attr("class", "yAxisLabel")
-           .attr("transform","translate(-30," + height/2 + ") rotate(-90)")
+           .attr("transform","translate(-40," + height/2 + ") rotate(-90)")
            .attr("text-anchor", "middle")
            .style("font-weight", "bold")
-           .style("font-size", "13px")
+           .style("font-size", "16px")
             
         //title for stress/strain chart
         d3.select("#ss_chart").select("svg").append("g").append("text")
             .attr("x", (width / 1.5))
             .attr("y", margin.top)
             .attr("text-anchor", "middle")
-            .style("font-size", "16px")
+            .style("font-size", "22px")
+            .style("font-family", "sans-serif")
             .style("text-decoration", "underline")
             .text("Stress vs. Strain Graph");
 
@@ -168,20 +172,20 @@ Fall 2014
                .attr("transform", "translate(0," + height + ")")
                .append("text")
                .attr("class", "xAxisLabel")
-               .attr("transform","translate(" + width/2 + ",30)")
+               .attr("transform","translate(" + width/2 + ",40)")
                .attr("text-anchor", "middle")
                .style("font-weight", "bold")
-               .style("font-size", "13px")
+               .style("font-size", "16px")
         
         //set y axis for stress/strain chart
         ssChart.append("g")
                .attr("class", "y axis")
                .append("text")
                .attr("class", "yAxisLabel")
-               .attr("transform","translate(-30," + height/2 + ") rotate(-90)")
+               .attr("transform","translate(-40," + height/2 + ") rotate(-90)")
                .attr("text-anchor", "middle")
                .style("font-weight", "bold")
-               .style("font-size", "13px")
+               .style("font-size", "16px")
 
         //Get total number of series
     	function getSeries(data) {
@@ -346,21 +350,24 @@ Fall 2014
 		  .style("margin", "10px 0px 0px 00px")
 		  .attr("type", "button")
 		  .attr("id", "updatePlotButton")
-		  .attr("value", "Update Plot");
+		  .attr("value", "Update Plot")
+		  .style("font-size", "20px");
 
 	buttonDiv.append("div")
 		  .append("input")
 		  .style("margin", "10px 0px 0px 00px")
 		  .attr("type", "button")
 		  .attr("id", "deselectAllButton")
-		  .attr("value", "Deselect All Series");
+		  .attr("value", "Deselect All Series")
+		  .style("font-size", "20px");
 
 	buttonDiv.append("div")
 		  .append("input")
 		  .style("margin", "10px 0px 0px 0px")
 		  .attr("type", "button")
 		  .attr("id", "selectAllButton")
-		  .attr("value", "Select All Series");
+		  .attr("value", "Select All Series")
+		  .style("font-size", "20px");
 
         d3.select("#updatePlotButton").on("click", checkCheckboxes);
         d3.select("#selectAllButton").on("click", checkAllSeriesBoxes);
@@ -476,21 +483,24 @@ Fall 2014
                .attr("x", 0)
                .attr("y", -20)
                .attr("dy", ".35em")
-               .attr("text-anchor", "middle");
+               .attr("text-anchor", "middle")
+               .style("font-family", "sans-serif");
             
         pcFocus.append("text")
                .attr("class", "strain")
                .attr("x", 0)
                .attr("y", -35)
                .attr("dy", ".35em")
-               .attr("text-anchor", "middle");
+               .attr("text-anchor", "middle")
+               .style("font-family", "sans-serif");
             
         pcFocus.append("text")
                .attr("class", "sample")
                .attr("x", 0)
                .attr("y", -50)
                .attr("dy", ".35em")
-               .attr("text-anchor", "middle");
+               .attr("text-anchor", "middle")
+               .style("font-family", "sans-serif");
 
         //create overlaying rect just for double-click area
         svg.append("rect")
@@ -587,7 +597,8 @@ Fall 2014
                  .attr("text-anchor", "middle")
                  .style("background-color", "white")
                  .text("("+(numPics+1)+") "+d.sample + ", Strain: "+formatVal(d.Strain) +", Stress (MPa): " + formatVal(d.Stress_MPa))
-            .style("font-size", "14px");
+	         .style("font-size", "14px")
+	         .style("font-family", "sans-serif");
 
             //show image
             image.append("image")
