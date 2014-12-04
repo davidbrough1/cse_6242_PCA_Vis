@@ -77,7 +77,7 @@ Fall 2014
     
     //set margins
     var margin = {top: 20, right: 20, bottom: 70, left: 70},
-    width = 625 - margin.left - margin.right,
+    width = 650 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
     
     //set axis ranges
@@ -515,14 +515,14 @@ Fall 2014
             formatVal = d3.format(".2f");
             strain = "Strain: "+formatVal(d.Strain);
             load = "Stress (MPa): "+formatVal(d.Stress_MPa);
-            pcFocus.select(".load").text(load).style("fontsize", "8px");
-            pcFocus.select(".strain").text(strain).style("fontsize", "8px");;
-            pcFocus.select(".sample").text(d.sample).style("fontsize", "8px");;
+            pcFocus.select(".load").text(load).style("font-size", "12px");
+            pcFocus.select(".strain").text(strain).style("font-size", "12px");;
+            pcFocus.select(".sample").text(d.sample).style("font-size", "12px");;
         }
-                
+            
         //keep track of num of images
         var numPics = 0;
-                
+            
         //click to get image for a point
         function cloned(d) {
             //only allow 4 images at a time
@@ -587,7 +587,7 @@ Fall 2014
                  .attr("text-anchor", "middle")
                  .style("background-color", "white")
                  .text("("+(numPics+1)+") "+d.sample + ", Strain: "+formatVal(d.Strain) +", Stress (MPa): " + formatVal(d.Stress_MPa))
-                 .style("font-size", "14px");
+            .style("font-size", "14px");
 
             //show image
             image.append("image")
@@ -610,6 +610,6 @@ Fall 2014
         }
             
         checkCheckboxes();
-
+            
     });//end d3.json
 </script>
