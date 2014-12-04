@@ -215,7 +215,7 @@ Fall 2014
                 }
 
                 radioButtonGroupX.append("div")
-                                 .html("PC " + i)
+                                 .html("PC " + (i+1))
                                  .attr("id", "xAxis_radioButtons")
                                  .append("input")
                                  .attr("type","radio")
@@ -238,7 +238,7 @@ Fall 2014
                 }
 
                 radioButtonGroupY.append("div")
-                                 .html("PC " + i)
+                                 .html("PC " + (i+1))
                                  .attr("id", "yAxis_radioButtons")
                                  .append("input")
                                  .attr("type","radio")
@@ -284,15 +284,49 @@ Fall 2014
             removeCircles();
         }
 
+	//Check all series checkboxes
+	function checkAllSeriesBoxes() {
+            for ( var i = 0; i < series.length; i++) {
+                 d3.select("#"+series[i]).property("checked", true);
+
+	    }
+	}
+
+	//Uncheck all series checkboxes
+	function uncheckAllSeriesBoxes() {
+            for ( var i = 0; i < series.length; i++) {
+                 d3.select("#"+series[i]).property("checked", false);
+
+	    }
+	}
+
         //Create button to update the plots
-        d3.select("#filters").append("div")
-          .attr("class", "filter")
-          .append("input")
-          .attr("type", "button")
-          .attr("id", "updatePlotButton")
-          .attr("value", "Update Plot")
+        var buttonDiv = d3.select("#filters").append("g").attr("class", "filter").style("float", "left");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 00px")
+		  .attr("type", "button")
+		  .attr("id", "updatePlotButton")
+		  .attr("value", "Update Plot");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 00px")
+		  .attr("type", "button")
+		  .attr("id", "deselectAllButton")
+		  .attr("value", "Deselect All Series");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 0px")
+		  .attr("type", "button")
+		  .attr("id", "selectAllButton")
+		  .attr("value", "Select All Series");
 
         d3.select("#updatePlotButton").on("click", checkCheckboxes);
+        d3.select("#selectAllButton").on("click", checkAllSeriesBoxes);
+        d3.select("#deselectAllButton").on("click", uncheckAllSeriesBoxes);
 
         //Get data points associated with a single series
         function getSingleSeriesData(data,seriesName) {
