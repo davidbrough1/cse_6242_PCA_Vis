@@ -55,7 +55,7 @@ for file_name, sample_area in zip(file_names, sample_areas):
             pt[3] = 0
         Load_newtons = float(pt[3]) / 9.80665
         sample_area_meters = sample_area * 1e-12 * width
-        pt_dict['Stress_(MPa)'] = (Load_newtons / sample_area_meters) * 1e-6
+        pt_dict['Stress_MPa'] = (Load_newtons / sample_area_meters) * 1e-6
         pt_dict['Strain'] = float(pt[4])
         dict_list.append(pt_dict)
         pt_index += 1
