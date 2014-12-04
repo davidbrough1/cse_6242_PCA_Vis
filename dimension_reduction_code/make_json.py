@@ -23,7 +23,6 @@ def _get_pic_suffix(sample_name, time):
 
 def _get_pic_prefix(sample_name):
     if int(sample_name[-2]) == 0:
-        print sample_name[:-2]
         return sample_name[:-2] + sample_name[-1]
     else:
         return sample_name
@@ -32,7 +31,9 @@ def _get_pic_prefix(sample_name):
 file_names = sorted(os.listdir(directory_property))
 dict_list = []
 name_index = 0
-for file_name in file_names:
+width = 0.9 * 25400
+sample_areas = [10, 14, 15, 5, 14, 18, 9, 15, 15, 7, 6, 17]
+for file_name, sample_area in zip(file_names, sample_areas):
     f = open(os.path.join(directory_property, file_name), 'rb')
     data = f.readlines()
     data_cleaned = [i[:-1] for i in data]
@@ -50,8 +51,12 @@ for file_name in file_names:
         pt_dict['percent_crystallinity'] = float(pt[0])
         pt_dict['percent_orthorhombic'] = float(pt[1])
         pt_dict['percent_monoclinic'] = float(pt[2])
-        pt_dict['Load_in_Kgs'] = float(pt[3])
-        pt_dict['strain'] = float(pt[4])
+        if float(pt[3]) < 0:
+            pt[3] = 0
+        Load_newtons = float(pt[3]) / 9.80665
+        sample_area_meters = sample_area * 1e-12 * width
+        pt_dict['Stress_MPa'] = (Load_newtons / sample_area_meters) * 1e-6
+        pt_dict['Strain'] = float(pt[4])
         dict_list.append(pt_dict)
         pt_index += 1
     name_index += 1

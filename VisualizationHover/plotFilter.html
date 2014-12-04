@@ -252,7 +252,7 @@ Fall 2014
                 }
 
                 radioButtonGroupX.append("div")
-                                 .html("PC " + i)
+                                 .html("PC " + (i+1))
                                  .attr("id", "xAxis_radioButtons")
                                  .append("input")
                                  .attr("type","radio")
@@ -275,7 +275,7 @@ Fall 2014
                 }
 
                 radioButtonGroupY.append("div")
-                                 .html("PC " + i)
+                                 .html("PC " + (i+1))
                                  .attr("id", "yAxis_radioButtons")
                                  .append("input")
                                  .attr("type","radio")
@@ -321,15 +321,49 @@ Fall 2014
             removeCircles();
         }
 
+	//Check all series checkboxes
+	function checkAllSeriesBoxes() {
+            for ( var i = 0; i < series.length; i++) {
+                 d3.select("#"+series[i]).property("checked", true);
+
+	    }
+	}
+
+	//Uncheck all series checkboxes
+	function uncheckAllSeriesBoxes() {
+            for ( var i = 0; i < series.length; i++) {
+                 d3.select("#"+series[i]).property("checked", false);
+
+	    }
+	}
+
         //Create button to update the plots
-        d3.select("#filters").append("div")
-          .attr("class", "filter")
-          .append("input")
-          .attr("type", "button")
-          .attr("id", "updatePlotButton")
-          .attr("value", "Update Plot")
+        var buttonDiv = d3.select("#filters").append("g").attr("class", "filter").style("float", "left");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 00px")
+		  .attr("type", "button")
+		  .attr("id", "updatePlotButton")
+		  .attr("value", "Update Plot");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 00px")
+		  .attr("type", "button")
+		  .attr("id", "deselectAllButton")
+		  .attr("value", "Deselect All Series");
+
+	buttonDiv.append("div")
+		  .append("input")
+		  .style("margin", "10px 0px 0px 0px")
+		  .attr("type", "button")
+		  .attr("id", "selectAllButton")
+		  .attr("value", "Select All Series");
 
         d3.select("#updatePlotButton").on("click", checkCheckboxes);
+        d3.select("#selectAllButton").on("click", checkAllSeriesBoxes);
+        d3.select("#deselectAllButton").on("click", uncheckAllSeriesBoxes);
 
         //Get data points associated with a single series
         function getSingleSeriesData(data,seriesName) {
@@ -384,9 +418,9 @@ Fall 2014
                .on("dblclick", removeCircles);
 
             //Plot stress/strain curve
-            xRange.domain([0, d3.max(data, function(d) { return d.strain ;})]);
-            yRange.domain([0, d3.max(data, function(d) { return d.Load_in_Kgs ;})]);
-            /////////////some of the data here is negative?/////////////////////
+            xRange.domain([0, d3.max(data, function(d) { return d.Strain ;})]);
+//             yRange.domain([0, d3.max(data, function(d) { return d.Load_in_Kgs ;})]);
+            yRange.domain([0, d3.max(data, function(d) { return d.Stress_MPa ;})]);
 
             var xAxis = d3.svg.axis()
                           .scale(xRange)
@@ -403,7 +437,7 @@ Fall 2014
             ssChart.select(".xAxisLabel")
                    .text("Strain");
             ssChart.select(".yAxisLabel")
-                   .text("Load (kg)");
+                   .text("Stress (MPa)");
 
             ssChart.append("g")
                    .attr("class", "circles_ss_"+seriesName)
@@ -411,8 +445,9 @@ Fall 2014
                    .data(getSingleSeriesData(data, seriesName))
                    .enter()
                    .append("circle")
-                   .attr("cx", function(d) { return xRange(d.strain); } )
-                   .attr("cy", function(d) { return yRange(d.Load_in_Kgs); } )
+                   .attr("cx", function(d) { return xRange(d.Strain); } )
+//                    .attr("cy", function(d) { return yRange(d.Load_in_Kgs); } )
+                   .attr("cy", function(d) { return yRange(d.Stress_MPa); } )
                    .attr("r", 2)
                    .attr("fill", colors[series.indexOf(seriesName)])
                    .style("stroke", colors[series.indexOf(seriesName)]);
@@ -470,15 +505,15 @@ Fall 2014
                 
             xloc = d3.select(this).attr("cx")
             yloc = d3.select(this).attr("cy")
-            ssXloc = xRange(d.strain)
-            ssYloc = yRange(d.Load_in_Kgs)
+            ssXloc = xRange(d.Strain)
+            ssYloc = yRange(d.Stress_MPa)
                 
             ssFocus.attr("transform", "translate(" + ssXloc+ "," +ssYloc + ")");
             pcFocus.attr("transform", "translate(" + xloc+ "," +yloc + ")");
             
             formatVal = d3.format(".2f");
-            strain = "Strain: "+formatVal(d.strain);
-            load = "Load(kg): "+formatVal(d.Load_in_Kgs);
+            strain = "Strain: "+formatVal(d.Strain);
+            load = "Stress (MPa): "+formatVal(d.Stress_MPa);
             pcFocus.select(".load").text(load).style("fontsize", "8px");
             pcFocus.select(".strain").text(strain).style("fontsize", "8px");;
             pcFocus.select(".sample").text(d.sample).style("fontsize", "8px");;
@@ -514,8 +549,8 @@ Fall 2014
             //set text for static focus circle
             pcFocusClone.select(".load").text(numPics+1)
                 
-            ssXloc = xRange(d.strain)
-            ssYloc = yRange(d.Load_in_Kgs)
+            ssXloc = xRange(d.Strain)
+            ssYloc = yRange(d.Stress_MPa)
             
             ssFocusClone = ssChart.append("g")
                                   .attr("class", "focusClone")
@@ -550,7 +585,7 @@ Fall 2014
                  .attr("dy", ".35em")
                  .attr("text-anchor", "middle")
                  .style("background-color", "white")
-                 .text("("+(numPics+1)+") "+d.sample + ", Strain: "+formatVal(d.strain) +", Load (kg): " + formatVal(d.Load_in_Kgs))
+                 .text("("+(numPics+1)+") "+d.sample + ", Strain: "+formatVal(d.Strain) +", Stress (MPa): " + formatVal(d.Stress_MPa))
                  .style("font-size", "14px");
 
             //show image
