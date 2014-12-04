@@ -535,6 +535,7 @@ Fall 2014
             
         //click to get image for a point
         function cloned(d) {
+            image.selectAll(".blankImageText").remove();
             //only allow 4 images at a time
             if (numPics >= 4) {
                 removeCircles()
@@ -618,6 +619,19 @@ Fall 2014
             image.selectAll("text").remove();
             svg.selectAll("g.focusClone").remove();
             ssChart.selectAll("g.focusClone").remove();
+
+            //text for image space when no images are present
+            image.append("text")
+            .attr("class", "blankImageText")
+            .attr("x", (width / 1.85))
+            .attr("y", (height/2))
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .style("font-family", "sans-serif")
+            .text("Click on a PC point!");
+            
+
         }
             
         checkCheckboxes();
