@@ -400,9 +400,9 @@ Fall 2014
                .call(yAxis);
 
             svg.select(".xAxisLabel")
-               .text("PC " + xAxisIndex);
+               .text("PC " + (xAxisIndex+1));
             svg.select(".yAxisLabel")
-               .text("PC " + yAxisIndex);
+               .text("PC " + (yAxisIndex+1));
 
             //Create circles for PC scatter plot
             svg.append("g")
