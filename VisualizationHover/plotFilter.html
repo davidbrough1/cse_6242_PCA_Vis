@@ -21,9 +21,17 @@ Fall 2014
 }
 
 .container {
-	width: 50%;
-	height: 50%;
+	width: 49%;
+	height: 49%;
 	float: left;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.container2 {
+    width: 49%;
+    height: 49%;
+    float: left;
 }
 
 .filter {
@@ -60,7 +68,7 @@ Fall 2014
     <!--div for stress/strain chart area-->
     <div class="container" id="ss_chart"></div>
     <!--div for filter control area-->
-    <div class="container" id="filters"></div>
+    <div class="container2" id="filters"></div>
 </body>
 
 <script src="d3/d3.v3.min.js"></script>
@@ -77,32 +85,52 @@ Fall 2014
     
     //area for PC chart
     var svg = d3.select("#pc_chart").append("svg")
-                .attr("width", width + margin.left + margin.right+10)
+                .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
                 .style("float", "right")
-                .style("margin-right", "15%")
+                .style("margin-right", "10%")
                 .append("g")
-                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
+                
 
     //area for stress/strain chart
     var ssChart = d3.select("#ss_chart").append("svg")
-                    .attr("width", width + margin.left + margin.right+10)
+                    .attr("width", width + margin.left + margin.right)
                     .attr("height", height + margin.top + margin.bottom)
                     .style("float", "right")
-                    .style("margin-right", "15%")
+                    .style("margin-right", "10%")
                     .append("g")
-                    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                    .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
     
     //area for image
     var image = d3.select("#images").append("svg")
-                  .attr("width", width + margin.left + margin.right+10)
+                  .attr("width", width + margin.left + margin.right)
                   .attr("height", height + margin.top + margin.bottom)
                   .append("g")
-                  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                  .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
 
     //import data from json
     d3.json("Vis_data.json", function(error, data) {
 
+        //title for Images
+        d3.select("#images").select("svg").append("g").append("text")
+            .attr("x", (width / 1.5))
+            .attr("y", margin.top)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text("Images");
+            
+            
+        //title for PC chart
+        d3.select("#pc_chart").select("svg").append("g").append("text")
+            .attr("x", (width / 1.5))
+            .attr("y", margin.top)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text("PC Graph");
+            
         //set x axis for PC chart
         svg.append("g")
            .attr("class", "x axis")
@@ -123,6 +151,15 @@ Fall 2014
            .attr("text-anchor", "middle")
            .style("font-weight", "bold")
            .style("font-size", "13px")
+            
+        //title for stress/strain chart
+        d3.select("#ss_chart").select("svg").append("g").append("text")
+            .attr("x", (width / 1.5))
+            .attr("y", margin.top)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .style("text-decoration", "underline")
+            .text("Stress vs. Strain Graph");
 
         //set x axis for stress/strain chart
         ssChart.append("g")
