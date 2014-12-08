@@ -1,0 +1,38 @@
+#######################################################################
+CSE6242 Fall 2014
+Final Project
+Team Name: MatSciViz
+Team Members: Abhiram Kannan, Allen Koh, David Brough, David Scripka
+#######################################################################
+
+##########################
+Required files 
+##########################
+
+plotFilter.html - HTML and javascript code for visualization
+Vis_data.json - Reduced data from PCA on X-Ray Scatter images
+thumbnails (folder) - Small versions of X-Ray scatter images
+d3 (folder) - Current version of d3.js
+
+##########################
+Running the tool
+##########################
+All of the code is contained in the plotFilter.html file, with the proper references to the thumbnails data folders/files and d3. To launch the tool,
+simply open up plotFilter.html in any web browser, although note that our testing was only done in Google Chrome and Mozilla Firefox.
+
+
+##########################
+Using the tool
+##########################
+
+The user interface has 4 main areas broken up into four quadrants. The upper left quadrant contains 2D scatter plots in principal component (PC)
+space. Clicking on individual points in this plot will pull up images in the upper right quadrant, showing the X-ray scatter (XRS) images
+associated with that point. The maximum number of images that can appear is 4 - clicking on a 5th point will clear the existing selections.
+Double-clicking in the PC graph space will also clear any existing selections.
+
+The lower left quadrant shows stress/strain curves for each sample (12 in total). Selecting points in the PC plot in the upper right quadrant
+will highlight the corresponding point (based on strain) on the stress/strain curve in the lower left quadrant.
+
+Finally, the lower right quadrant contains the controls for filtering and showing the data. "Series Selection" will hide/show the PC and stress/strain
+plots for the selected sample. You can also select what PC to plot on the X and Y axis for the PC plot in the upper left. The buttons on the far right
+will update the plot based on the filter selections, as well as select/deselect all samples for plotting.
